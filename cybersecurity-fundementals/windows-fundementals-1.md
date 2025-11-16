@@ -2,9 +2,6 @@
 
 Learn about the Windows desktop, the NTFS file system, UAC, the Control Panel, Task Manager, and more.
 
-**Room:** https://tryhackme.com/room/windowsfundamentals1  
-**GitBook Summary:** *(if you have a link, include it here)*
-
 ---
 
 ##  Topics Covered
