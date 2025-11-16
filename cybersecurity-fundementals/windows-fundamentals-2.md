@@ -2,9 +2,6 @@
 
 Explore System Configuration, UAC settings, Resource Monitoring, the Windows Registry, and more.
 
-**Room:** https://tryhackme.com/room/windowsfundamentals2  
-**GitBook Summary:** *(add your link here if available)*
-
 ---
 
 ##  Topics Covered
