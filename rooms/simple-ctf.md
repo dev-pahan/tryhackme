@@ -33,6 +33,8 @@ As usual, I kicked things off with an nmap scan:
 nmap -sC -sV -p- <target_ip>
 ```
 
+<img width="960" height="1032" alt="1" src="https://github.com/user-attachments/assets/c6042664-1429-40c7-9a61-88248241e878" />
+
 From the results we see ports 21 (FTP), 80 (HTTP), and 2222 (SSH) are open.
 
 Knowing there is a web server on port 80, I browsed to it to see what was served.
@@ -45,6 +47,8 @@ Visiting the site returned the default Apache2 page — nothing obvious. Next I 
 gobuster dir -u http://<target_ip> -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -t 100
 ```
 
+<img width="960" height="1032" alt="5" src="https://github.com/user-attachments/assets/447471dc-276b-46d7-bf32-440108cb1380" />
+
 Gobuster found a directory at `/simple`. Browsing to http://<target_ip>/simple revealed a CMS page - specifically "CMS Made Simple" version 2.2.8.
 
 ---
@@ -56,7 +60,11 @@ Gobuster found a directory at `/simple`. Browsing to http://<target_ip>/simple r
 I searched online for known issues with that version:
 Search: "CMS Made Simple 2.2.8 exploit"
 
+<img width="960" height="1032" alt="6" src="https://github.com/user-attachments/assets/a36185b3-5ddb-4776-9eb5-c2e106bcce85" />
+
 This led to an Exploit-DB entry referencing CVE-2019-9053 — a SQL injection vulnerability.
+
+<img width="960" height="1032" alt="7" src="https://github.com/user-attachments/assets/58281632-ac34-4bd1-ae56-bdaf038b4abd" />
 
 ### 2. Prepare & Run the Exploit
 
@@ -65,6 +73,8 @@ The exploit was provided as a Python script. I copied it to the AttackBox as exp
 ```
 python3 exploit.py -u http://<target_ip>/simple --crack -w /path/to/wordlist.txt
 ```
+
+<img width="960" height="1032" alt="8" src="https://github.com/user-attachments/assets/34b4d6bc-8f87-4464-ae16-d9a98d7b8cc4" />
 
 Running the exploit with the URL and wordlist returned a username and cracked password.
 
@@ -79,6 +89,8 @@ Using the credentials discovered:
 ```
 ssh <username>@<target_ip> -p 2222
 ```
+
+<img width="960" height="1032" alt="9" src="https://github.com/user-attachments/assets/d1941909-e09d-4627-b65b-da1be708898c" />
 
 After logging in, I listed the home directory and found user.txt.
 
