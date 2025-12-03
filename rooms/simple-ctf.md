@@ -90,8 +90,6 @@ Using the credentials discovered:
 ssh <username>@<target_ip> -p 2222
 ```
 
-<img width="960" height="1032" alt="9" src="https://github.com/user-attachments/assets/d1941909-e09d-4627-b65b-da1be708898c" />
-
 After logging in, I listed the home directory and found user.txt.
 
 ### 2. Check for Other Users
@@ -131,6 +129,8 @@ cd /root
 ls
 cat /root.txt
 ```
+
+<img width="960" height="1032" alt="9" src="https://github.com/user-attachments/assets/d1941909-e09d-4627-b65b-da1be708898c" />
 
 ## Summary
 
